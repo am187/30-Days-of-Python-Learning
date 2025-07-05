@@ -49,8 +49,7 @@ Welcome to my Python learning journey! Over the past month, I studied Python fun
 - Dive into Python tools 
 
 ## 📬 Contact
-If you're on a similar learning path or want to collaborate on beginner projects, feel free to reach out or connect on [LinkedIn](https://www.linkedin.com/).
-
+If you're on a similar learning path or want to collaborate on beginner projects, feel free to reach out or connect on [LinkedIn](https://www.linkedin.com/in/amol-thakare-182610352/).
 ---
 
 ⭐️ _Thanks for visiting! Don't forget to give this repo a ⭐ if you found it helpful._
