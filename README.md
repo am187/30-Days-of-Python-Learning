@@ -33,7 +33,7 @@ Welcome to my Python learning journey! Over the past month, I studied Python fun
 - Exploratory data analysis using Pandas and Matplotlib
 - Cleaned data, handled null values, visualized churn distribution
 - Converted column types, used statistical summaries
-- PDF: [`Week 4 - Final Project`](./Python%20Week4%20Final%202Project%20.pdf)
+- PDF: [`Week 4 - Final Project`](./Python%20Week4%20Final%20Project%20.pdf)
 
 ---
 
