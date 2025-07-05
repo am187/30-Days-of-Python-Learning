@@ -1,0 +1,100 @@
+# 📦 Import necessary libraries
+import pandas as pd  # For data manipulation and analysis
+import matplotlib.pyplot as plt  # For plotting graphs
+import seaborn as sns  # For advanced visualizations
+
+# 📂 Load dataset
+df = pd.read_csv('Customer Churn.csv')  # Load the CSV into a DataFrame
+
+# 🧾 Initial data inspection
+df.head()  # Display first 5 rows
+df.tail()  # Display last 5 rows
+df.info()  # Check column data types and null values
+
+# 🔧 Clean 'TotalCharges' column (some values are blank)
+df["TotalCharges"] = df["TotalCharges"].replace(" ", "0")  # Replace blanks with zero
+df["TotalCharges"] = df["TotalCharges"].astype("float")  # Convert to numeric type
+
+# 🧹 Check for nulls or duplicates
+df.isnull().sum()  # Null count per column
+df.describe()  # Summary statistics for numeric columns
+df.duplicated().sum()  # Check for full duplicate rows
+df["customerID"].duplicated().sum()  # Check for duplicate customer IDs
+
+# 🔁 Convert 0/1 in 'SeniorCitizen' to 'Yes'/'No' for clarity
+def conv(value):
+    return "Yes" if value == 1 else "No"
+
+df['SeniorCitizen'] = df['SeniorCitizen'].apply(conv)
+
+# 📊 Churn count plot
+ax = sns.countplot(x="Churn", data=df)
+ax.bar_label(ax.containers[0])
+plt.title("Count of Customers By Churn")
+plt.show()
+
+# 🥧 Churn percentage pie chart
+plt.figure(figsize=(3,4))
+gb = df.groupby("Churn").agg({'Churn': "count"})
+plt.pie(gb['Churn'], labels=gb.index, autopct="%1.2f%%")
+plt.title("Percentage of Churned Customers")
+plt.show()
+
+# 👨‍👩‍👧‍👦 Churn by gender
+plt.figure(figsize=(5,4))
+sns.countplot(x="gender", data=df, hue="Churn")
+plt.title("Churn By Gender")
+plt.show()
+
+# 👴 Churn by Senior Citizen status
+plt.figure(figsize=(3,4))
+ax = sns.countplot(x="SeniorCitizen", data=df)
+ax.bar_label(ax.containers[0])
+plt.title("Customers by Senior Citizen")
+plt.show()
+
+# ⏳ Churn by customer tenure
+plt.figure(figsize=(9,4))
+sns.histplot(x="tenure", data=df, bins=70, hue="Churn")
+plt.title("Tenure vs Churn")
+plt.show()
+
+# 📄 Churn by contract type
+plt.figure(figsize=(4,4))
+ax = sns.countplot(x="Contract", data=df, hue="Churn")
+ax.bar_label(ax.containers[0])
+plt.title("Contract Type vs Churn")
+plt.show()
+
+# 🧾 Churn by different services
+columns = ['PhoneService', 'MultipleLines', 'InternetService',
+           'OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
+           'TechSupport', 'StreamingTV', 'StreamingMovies']
+
+n_cols = 3
+n_rows = (len(columns) + n_cols - 1) // n_cols
+
+fig, axes = plt.subplots(n_rows, n_cols, figsize=(15, n_rows * 4))
+axes = axes.flatten()
+
+for i, col in enumerate(columns):
+    sns.countplot(x=col, data=df, ax=axes[i], hue=df["Churn"])
+    axes[i].set_title(f'Count Plot of {col}')
+    axes[i].set_xlabel(col)
+    axes[i].set_ylabel('Count')
+
+# Remove empty subplots
+for j in range(i + 1, len(axes)):
+    fig.delaxes(axes[j])
+
+plt.tight_layout()
+plt.show()
+
+# 💳 Churn by payment method
+plt.figure(figsize=(6,4))
+ax = sns.countplot(x="PaymentMethod", data=df, hue="Churn")
+ax.bar_label(ax.containers[0])
+ax.bar_label(ax.containers[1])
+plt.title("Churn by Payment Method")
+plt.xticks(rotation=45)
+plt.show()
